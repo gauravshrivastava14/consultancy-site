@@ -71,7 +71,7 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Optional if not already defined
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main', 'static')]
 
 
 WSGI_APPLICATION = 'softwareconstlancy.wsgi.application'
