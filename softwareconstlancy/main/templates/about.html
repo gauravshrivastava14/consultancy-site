@@ -1,0 +1,483 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - RailWire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --light: #ffffff;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --text-muted: #64748b;
+        }
+
+        [data-theme="dark"] {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --secondary: #1e40af;
+            --accent: #93c5fd;
+            --light: #0f172a;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --light-gray: #1e293b;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* About Page Specific Styles */
+        .about-page {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .about-content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .about-content p {
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .about-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .stats-section {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 60px;
+            margin-bottom: 80px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 30px 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-title {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .team-member {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+}
+
+.member-image {
+    height: 300px; /* Adjust this height if needed */
+    overflow: hidden;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.team-member:hover .member-image img {
+    transform: scale(1.1);
+}
+        .member-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .member-position {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .member-bio {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--gray);
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .values-section {
+            margin-top: 80px;
+        }
+
+        .values-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .value-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .value-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .about-section {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-page {
+                padding: 60px 0;
+            }
+            
+            .about-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+                height: 400px;
+            }
+            
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .stats-section {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 32px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main class="about-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>About RailWire</h1>
+                <p>We are a team of passionate professionals dedicated to delivering exceptional software solutions that drive business growth and innovation.</p>
+            </div>
+
+            <section class="about-section">
+                <div class="about-content">
+                    <h2>Our Story</h2>
+                    <p>Founded in 2010, RailWire began as a small team of developers with a shared vision to create software that makes a difference. Today, we've grown into a full-service software development company serving clients across multiple industries.</p>
+                    <p>Our journey has been marked by continuous learning, innovation, and a commitment to excellence. We take pride in our ability to adapt to changing technologies while maintaining our core values of integrity, quality, and customer satisfaction.</p>
+                    <p>What sets us apart is our people-first approach, both for our clients and our team members. We believe that great software is built by happy, empowered teams working closely with engaged clients.</p>
+                </div>
+                <div class="about-image">
+                    <img src="{% static 'image/caucasian-supervisor-helping-new-asian-employee.jpg' %}" alt="RailWire team working together">
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">13+</div>
+                        <div class="stat-title">Years in Business</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">450+</div>
+                        <div class="stat-title">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">75+</div>
+                        <div class="stat-title">Team Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-title">Client Satisfaction</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="team-section">
+                <h2>Meet Our Leadership</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-image">
+                            <img src="{% static 'image/070ee491-fb67-4e89-805b-d3fcbfab3b8a.svg' %}" alt="Alex Johnson">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">gaurav shrivastava</h3>
+                            <div class="member-position">CEO & Founder</div>
+                            <p class="member-bio">With over 15 years in software development, Alex leads our strategic vision and ensures we stay true to our core values.</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-image">
+                            <img src="{% static 'image\boss-man-concept-illustration_114360-16127.jpg' %}" alt="Sarah Chen">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Sarah Chen</h3>
+                            <div class="member-position">CTO</div>
+                            <p class="member-bio">Sarah oversees our technical direction and ensures we're using the best tools and methodologies for each project.</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-image">
+                            <img src="{% static 'image\professional-boss-office-illustration-design_1294205-58.avif' %}" alt="Michael Rodriguez">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Michael Rodriguez</h3>
+                            <div class="member-position">Head of Product</div>
+                            <p class="member-bio">Michael works closely with clients to translate business needs into technical requirements and exceptional user experiences.</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="values-section">
+                <h2>Our Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="value-title">Innovation</h3>
+                        <p class="value-description">We constantly explore new technologies and approaches to deliver cutting-edge solutions that give our clients a competitive edge.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="value-title">Integrity</h3>
+                        <p class="value-description">We believe in transparency, honesty, and doing what's right - even when no one is watching. Our reputation is built on trust.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="value-title">Collaboration</h3>
+                        <p class="value-description">Great software is built through teamwork. We work closely with clients and each other to achieve exceptional results.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="value-title">Excellence</h3>
+                        <p class="value-description">We're committed to delivering the highest quality work in everything we do, from code quality to customer service.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="value-title">Passion</h3>
+                        <p class="value-description">We love what we do, and it shows in our work. Our enthusiasm drives us to go above and beyond for our clients.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="value-title">Continuous Learning</h3>
+                        <p class="value-description">In a rapidly evolving industry, we prioritize staying ahead of the curve through ongoing education and skill development.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        // Theme switching without flash
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = localStorage.getItem('theme-preference') || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% load static %}
+<footer style="background-color: #0f172a; color: white; padding: 60px 0 20px;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+            <div>
+                <h3 style="font-size: 20px; margin-bottom: 20px;">RailWire</h3>
+                <p style="color: #94a3b8; margin-bottom: 20px;">Your trusted partner for software development consulting services.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Services</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Software Development</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Consulting</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">UI/UX Design</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Quality Assurance</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Company</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">About Us</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Careers</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Blog</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#" style="color: #94a3b8; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Contact</h3>
+                <p style="color: #94a3b8; margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> npc delhi</p>
+                <p style="color: #94a3b8; margin-bottom: 10px;"><i class="fas fa-phone" style="margin-right: 10px;"></i> +91 7089955082</p>
+                <p style="color: #94a3b8;"><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@railwire.com</p>
+            </div>
+        </div>
+        
+        <div style="border-top: 1px solid #334155; padding-top: 20px; text-align: center; color: #94a3b8;">
+            <p>&copy; 2025 RailWire. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu').addEventListener('click', function() {
+        document.querySelector('nav ul').classList.toggle('active');
+    });
+
+    // Theme toggle functionality
+    const storageKey = 'theme-preference';
+
+    const onClick = () => {
+        // flip current value
+        theme.value = theme.value === 'light' ? 'dark' : 'light';
+        setPreference();
+    }
+
+    const getColorPreference = () => {
+        if (localStorage.getItem(storageKey))
+            return localStorage.getItem(storageKey);
+        else
+            return window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+    }
+
+    const setPreference = () => {
+        localStorage.setItem(storageKey, theme.value);
+        reflectPreference();
+    }
+
+    const reflectPreference = () => {
+        document.firstElementChild.setAttribute('data-theme', theme.value);
+        document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+    }
+
+    const theme = {
+        value: getColorPreference(),
+    }
+
+    // set early so no page flashes / CSS is made aware
+    reflectPreference();
+
+    window.onload = () => {
+        // set on load so screen readers can see latest value on the button
+        reflectPreference();
+
+        // now this script can find and listen for clicks on the control
+        document.querySelector('#theme-toggle').addEventListener('click', onClick);
+    }
+
+    // sync with system changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches:isDark}) => {
+        theme.value = isDark ? 'dark' : 'light';
+        setPreference();
+    });
+</script>
+</body>
+</html>

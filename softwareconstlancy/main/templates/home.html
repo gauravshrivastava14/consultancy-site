@@ -1,0 +1,1295 @@
+{% include 'header.html' %}
+{% load static %}
+
+<style>
+    /* Global Variables */
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --primary-light: #3b82f6;
+        --secondary: #7c3aed;
+        --dark: #1e293b;
+        --gray: #64748b;
+        --light-gray: #f1f5f9;
+        --light: #f8fafc;
+        --bg-card: #ffffff;
+        --bg-input: #f8fafc;
+        --primary-rgb: 37, 99, 235;
+        --secondary-rgb: 124, 58, 237;
+    }
+
+    /* Global Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--dark);
+        background-color: var(--light);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    section {
+        padding: 100px 0;
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-header h2 {
+        font-size: 42px;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
+
+    .section-header p {
+        color: var(--gray);
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 18px;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 150px 0 120px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 80% 50%, rgba(255,255,255,0.15) 0%, transparent 50%);
+        z-index: 1;
+    }
+
+    .hero-content {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-text {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .hero-text .badge {
+        display: inline-block;
+        background-color: rgba(255,255,255,0.15);
+        backdrop-filter: blur(5px);
+        padding: 8px 16px;
+        border-radius: 50px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .hero h1 {
+        font-size: 52px;
+        font-weight: 800;
+        margin-bottom: 24px;
+        line-height: 1.2;
+    }
+
+    .hero h1 .highlight {
+        position: relative;
+        display: inline-block;
+    }
+
+    .hero h1 .highlight::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        background-color: rgba(255,255,255,0.3);
+        z-index: -1;
+        transform: scaleX(1.05);
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 32px;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background-color: white;
+        color: var(--primary);
+        font-weight: 600;
+        padding: 16px 32px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-button .btn-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .cta-button .btn-pulse {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 50%;
+        opacity: 0;
+        animation: pulse 2s infinite;
+    }
+
+    .outline-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 2px solid white;
+        color: white;
+        background-color: transparent;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+    }
+
+    .feature-item i {
+        color: rgba(255,255,255,0.8);
+    }
+
+    .hero-illustration {
+        flex: 1;
+        position: relative;
+    }
+
+    .image-container {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+        transition: transform 0.5s ease;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(var(--primary-rgb), 0.3), rgba(var(--secondary-rgb), 0.3));
+        mix-blend-mode: multiply;
+    }
+
+    .hero-shape {
+        position: absolute;
+        bottom: -100px;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        background: white;
+        clip-path: polygon(0 70%, 100% 0, 100% 100%, 0% 100%);
+        z-index: 1;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        background-color: var(--light-gray);
+        padding: 80px 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        text-align: center;
+    }
+
+    .stat-card {
+        padding: 40px 20px;
+        border-radius: 12px;
+        background-color: var(--bg-card);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+        line-height: 1;
+    }
+
+    .stat-title {
+        color: var(--gray);
+        font-size: 18px;
+    }
+
+    /* Services Section */
+    .services-section {
+        background-color: var(--light-gray);
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .service-card {
+        background-color: var(--bg-card);
+        border-radius: 12px;
+        padding: 40px 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+        font-size: 40px;
+        color: var(--primary);
+        margin-bottom: 25px;
+    }
+
+    .service-card h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: var(--dark);
+    }
+
+    .service-card p {
+        color: var(--gray);
+        line-height: 1.6;
+    }
+
+    .software-selection {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        background-color: var(--bg-card);
+        border-radius: 16px;
+        padding: 60px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .selection-content {
+        flex: 1;
+    }
+
+    .selection-content h3 {
+        font-size: 32px;
+        color: var(--dark);
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
+
+    .selection-content p {
+        color: var(--gray);
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .selection-image {
+        flex: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .selection-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    /* Process Section */
+    .process-section {
+        background-color: var(--light);
+    }
+
+    .process-steps {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .process-steps::before {
+        content: '';
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        height: calc(100% - 80px);
+        width: 4px;
+        background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        z-index: 1;
+    }
+
+    .process-step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .step-number {
+        width: 80px;
+        height: 80px;
+        background-color: var(--bg-card);
+        border: 4px solid var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-right: 30px;
+        flex-shrink: 0;
+    }
+
+    .step-content {
+        flex: 1;
+        background-color: var(--bg-card);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .step-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-content h3 {
+        font-size: 22px;
+        color: var(--dark);
+        margin-bottom: 15px;
+    }
+
+    .step-content p {
+        color: var(--gray);
+        line-height: 1.6;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        margin-left: 30px;
+        flex-shrink: 0;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+        background-color: var(--light);
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .benefit-card {
+        background-color: var(--bg-card);
+        border-radius: 12px;
+        padding: 40px 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .benefit-card i {
+        font-size: 40px;
+        color: var(--primary);
+        margin-bottom: 25px;
+    }
+
+    .benefit-card h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: var(--dark);
+    }
+
+    .benefit-card p {
+        color: var(--gray);
+        line-height: 1.6;
+    }
+
+    /* Contact Section */
+    .contact-section {
+        background-color: var(--light-gray);
+        padding: 120px 0;
+    }
+
+    .contact-container {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+
+    .contact-form {
+        background-color: var(--bg-card);
+        border-radius: 16px;
+        padding: 60px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .contact-form h2 {
+        font-size: 36px;
+        color: var(--dark);
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
+
+    .contact-form p {
+        color: var(--gray);
+        margin-bottom: 40px;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 2;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 16px;
+    }
+
+    form input, 
+    form textarea {
+        width: 100%;
+        padding: 16px;
+        border: 2px solid var(--light-gray);
+        border-radius: 8px;
+        font-size: 16px;
+        background-color: var(--bg-input);
+        color: var(--dark);
+        transition: all 0.3s ease;
+    }
+
+    form input:focus, 
+    form textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    form textarea {
+        min-height: 160px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        border: none;
+        padding: 18px 36px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .submit-btn i {
+        font-size: 20px;
+    }
+
+    .contact-image {
+        height: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s ease;
+    }
+
+    .contact-image:hover img {
+        transform: scale(1.03);
+    }
+
+    /* Animations */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+    }
+    /* Theme Toggle Button Styles */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--dark);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles */
+[data-theme="dark"] {
+    --dark: #f8fafc;
+    --light: #1e293b;
+    --light-gray: #334155;
+    --gray: #94a3b8;
+    --bg-card: #1e293b;
+    --bg-input: #334155;
+}
+
+[data-theme="dark"] .theme-toggle {
+    color: var(--light);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+    /* Responsive Styles */
+    @media (max-width: 1200px) {
+        .hero h1 {
+            font-size: 48px;
+        }
+        
+        .selection-content h3 {
+            font-size: 28px;
+        }
+        
+        .contact-container {
+            gap: 60px;
+        }
+        
+        .contact-form {
+            padding: 50px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .hero-content {
+            gap: 40px;
+        }
+        
+        .software-selection {
+            flex-direction: column;
+            gap: 40px;
+            padding: 50px;
+        }
+        
+        .selection-content, 
+        .selection-image {
+            width: 100%;
+        }
+        
+        .contact-container {
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+        
+        .contact-image {
+            height: 500px;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        section {
+            padding: 80px 0;
+        }
+        
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .hero-text {
+            max-width: 100%;
+        }
+        
+        .hero-buttons {
+            justify-content: center;
+        }
+        
+        .hero-illustration {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 40px;
+        }
+        
+        .process-steps::before {
+            left: 30px;
+        }
+        
+        .process-step {
+            flex-direction: column;
+        }
+        
+        .step-number {
+            margin-bottom: 20px;
+            margin-right: 0;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+        }
+        
+        .step-content {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        
+        .step-icon {
+            margin-left: 0;
+            align-self: center;
+        }
+        
+        .section-header h2 {
+            font-size: 36px;
+        }
+        
+        .contact-form {
+            padding: 40px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero h1 {
+            font-size: 32px;
+        }
+        
+        .hero p {
+            font-size: 16px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .hero-buttons a {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .stat-card {
+            padding: 30px 15px;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+        }
+        
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .software-selection {
+            padding: 40px 30px;
+        }
+        
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 1;
+        }
+        
+        .section-header h2 {
+            font-size: 32px;
+        }
+        
+        .contact-form h2 {
+            font-size: 30px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .hero h1 {
+            font-size: 28px;
+        }
+        
+        .hero-text .badge {
+            font-size: 12px;
+        }
+        
+        .process-steps::before {
+            display: none;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+    }
+</style>
+
+<main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right" data-aos-duration="800">
+                    <div class="badge">
+                        <span>Trusted by 500+ companies worldwide</span>
+                    </div>
+                    <h1>Transform Your Business With <span class="highlight">Expert Software</span> Development Consulting</h1>
+                    <p class="lead">RailWire provides top-notch software consulting services, guiding companies through every obstacle during software development lifecycle. With our highly qualified experts, you'll get industry-specific knowledge, strategic planning, optimized processes and customized solutions to boost your business growth.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="cta-button pulse-animation">
+                            <span class="btn-content">
+                                <span class="btn-text">Get a consultation</span>
+                                <span class="btn-icon">→</span>
+                            </span>
+                            <span class="btn-pulse"></span>
+                        </a>
+                        <a href="#services" class="outline-button">
+                            <span class="btn-content">
+                                <span class="btn-text">Explore services</span>
+                                <span class="btn-icon">↓</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>No upfront costs</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Industry experts</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Custom solutions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-illustration" data-aos="fade-left" data-aos-duration="800">
+                    <div class="image-container">
+                        <img src="{% static 'image\7046556.svg' %}" alt="Software illustration" class="hero-image">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape"></div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Achievements</h2>
+                <p>Years of excellence in software development consulting</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="stat-number">450</h3>
+                    <p class="stat-title">Projects delivered</p>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="stat-number">17+</h3>
+                    <p class="stat-title">Years experience</p>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="stat-number">500+</h3>
+                    <p class="stat-title">Team members</p>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="stat-number">75+</h3>
+                    <p class="stat-title">Team leaders</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>RailWire's Software Consulting Services</h2>
+                <p>Comprehensive solutions tailored to your business needs</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-laptop-code service-icon"></i>
+                    <h3>Software Interface</h3>
+                    <p>Expert consulting for intuitive and effective software interfaces.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="150">
+                    <i class="fas fa-clipboard-check service-icon"></i>
+                    <h3>Software Index Assessment</h3>
+                    <p>Comprehensive evaluation of your software portfolio and capabilities.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-cogs service-icon"></i>
+                    <h3>Software Development Consulting</h3>
+                    <p>End-to-end guidance for your software development lifecycle.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="250">
+                    <i class="fas fa-code service-icon"></i>
+                    <h3>Custom-Development Consulting</h3>
+                    <p>Tailored solutions designed specifically for your business needs.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-shield-alt service-icon"></i>
+                    <h3>Software Compliance Consulting</h3>
+                    <p>Ensure your software meets all regulatory requirements.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="350">
+                    <i class="fas fa-tasks service-icon"></i>
+                    <h3>Project Management Consulting</h3>
+                    <p>Expert guidance to keep your projects on time and on budget.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-lock service-icon"></i>
+                    <h3>Security Consulting</h3>
+                    <p>Protect your systems and data with our security expertise.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="450">
+                    <i class="fas fa-industry service-icon"></i>
+                    <h3>Software Professionalized & Proprietary</h3>
+                    <p>Specialized solutions for your unique business processes.</p>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <i class="fas fa-chart-line service-icon"></i>
+                    <h3>Data Analytics Consulting</h3>
+                    <p>Turn your data into actionable business insights.</p>
+                </div>
+            </div>
+            
+            <div class="software-selection" data-aos="fade-up">
+                <div class="selection-content">
+                    <h3>Software Selection</h3>
+                    <p>Whether you need professional help to choose the best-fit software to scale your business in a wide way. Our dedicated consulting teams will analyze your company's digital workflow and thinking to provide you with the most suitable software, keeping users and market trends in mind.</p>
+                    <p>At RailWire, we understand that operational software is the center of our services. Whether you're a small team or a large enterprise, our software development consulting services can help you resolve any software-related issues and achieve true business success.</p>
+                    <a href="#contact" class="cta-button">Connect with us for details</a>
+                </div>
+                <div class="selection-image">
+                    <img src="{% static 'image/consultant-group-meeting-ir1qvac70n327ksm.jpg' %}" alt="Software Selection Consulting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Software Consulting Process</h2>
+                <p>A structured approach to ensure nothing is missed in your software development journey</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step" data-aos="fade-right">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Discovery</h3>
+                        <p>Our developers work closely with clients to understand their content model, processes, and needs. We conduct comprehensive research into current technical infrastructure and external solutions.</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-left">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Innovation</h3>
+                        <p>We develop strategic goals and recommendations that align with your digital solutions. This includes implementing projects that integrate seamlessly with your existing tools.</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-right">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Analysis</h3>
+                        <p>Our consulting team evaluates your current system's effectiveness, identifies business opportunities, and delivers actionable insights based on comprehensive analysis.</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-left">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Strategy Creation</h3>
+                        <p>We develop a customized plan incorporating continuous, flexible resources and support. Our strategies focus on smart technologies, IoT, and key deliverables.</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-chess"></i>
+                    </div>
+                </div>
+                
+                <div class="process-step" data-aos="fade-right">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Improvements</h3>
+                        <p>We focus on implementation and ongoing improvement, providing relevant guidance and extensive support to address feedback and identify areas for enhancement.</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Can Software Development Consulting Benefit Your Business?</h2>
+                <p>Software consulting services provide companies with benefits during and after development</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-brain"></i>
+                    <h3>Strong Technical Expertise</h3>
+                    <p>Access to specialized knowledge and experience from industry experts.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="150">
+                    <i class="fas fa-clock"></i>
+                    <h3>Project Delivery On-time</h3>
+                    <p>Efficient processes that ensure your projects are completed as scheduled.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Cost-effective</h3>
+                    <p>Optimized solutions that maximize your budget and reduce waste.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="250">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h3>Customized Solutions</h3>
+                    <p>Tailored approaches designed specifically for your business needs.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Access to Latest Technologies</h3>
+                    <p>Stay ahead with cutting-edge tools and innovative approaches.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="350">
+                    <i class="fas fa-random"></i>
+                    <h3>Flexibility</h3>
+                    <p>Adaptable services that scale with your changing requirements.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Risk Management</h3>
+                    <p>Proactive identification and mitigation of potential issues.</p>
+                </div>
+                
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="450">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Long-term Partnership</h3>
+                    <p>Ongoing support and collaboration for continuous improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-form" data-aos="fade-right">
+                    <h2>Get in Touch With Our Team</h2>
+                    <p>Have questions about our services or ready to start your project? Fill out the form and we'll get back to you within 24 hours.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company" placeholder="Your Company">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+91 123 456 7890">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-image" data-aos="fade-left">
+                    <img src="{% static 'image/two-young-businessmen-with-report.jpg' %}" alt="Our team collaborating on a project">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    // Simple animation trigger for elements with data-aos attribute
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('[data-aos]');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Hero text animation
+        const heroText = document.querySelector('.hero-text');
+        if (heroText) {
+            setTimeout(() => {
+                heroText.style.opacity = '1';
+                heroText.style.transform = 'translateY(0)';
+            }, 300);
+        }
+    });
+    // Add this to your existing script or create a new script tag
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const icon = themeToggle.querySelector('i');
+    
+    // Check for saved user preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Determine initial theme
+    const currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    // Update icon based on current theme
+    if (currentTheme === 'dark') {
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
+    
+    // Theme toggle functionality
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Update the theme
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update the icon
+        if (newTheme === 'dark') {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    });
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Update the icon
+            if (newTheme === 'dark') {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+    });
+});
+</script>
+
+{% include 'footer.html' %}
